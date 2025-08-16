@@ -41,55 +41,59 @@ export default function Home() {
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-[#1a1a1a] px-4">
-      <div className="w-full max-w-2xl bg-[#222] border border-gray-800 rounded-xl shadow-md p-8">
-        
+    <main className="flex items-center justify-center min-h-screen bg-[#0f1216] px-4">
+      <div className="w-full max-w-xl bg-[#14181f] border border-[#1e2430] rounded-2xl p-8 shadow-[0_10px_30px_rgba(0,0,0,0.35)] animate-fade-in">
         {/* Title */}
-        <h1 className="text-3xl font-semibold mb-2 text-[#f59e0b]">
-          Name Predictor
+        <h1 className="text-2xl font-semibold mb-2 text-[#f5f7fa]">
+          <span className="text-[#f4a24f]">Name</span> Predictor
         </h1>
-        <p className="text-gray-400 mb-6">
-          Enter a name and we’ll predict age, gender, and nationality.
+        <p className="text-[#9aa3b2] mb-8 text-sm animate-fade-up">
+          Enter a name to predict age, gender, and nationality.
         </p>
 
-        {/* Input + Button in grid like reference */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        {/* Input + Button */}
+        <div className="flex gap-3 mb-6">
           <input
             type="text"
-            placeholder="Enter a name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="col-span-2 px-4 py-3 rounded-md bg-[#2b2b2b] border border-gray-700 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[#f59e0b]"
+            placeholder="Enter a name"
+            className="flex-1 px-4 py-3 rounded-lg bg-[#0f1319] border border-[#1f2633] text-[#e6ebf2] placeholder-[#6b7687] focus:outline-none focus:ring-2 focus:ring-[#f4a24f]/40 transition-all duration-300"
           />
           <button
             onClick={fetchData}
             disabled={loading}
-            className="w-full py-3 rounded-md font-medium bg-[#f59e0b] text-black hover:bg-[#d97706] transition disabled:opacity-50"
+            className="px-5 rounded-lg font-medium bg-[#f4a24f] text-[#1b1f26] hover:bg-[#e59039] transition-all duration-300 disabled:opacity-50 active:scale-[0.98]"
           >
-            {loading ? "Predicting..." : "Predict"}
+            {loading ? "Loading..." : "Predict"}
           </button>
         </div>
 
         {/* Error */}
         {error && (
-          <p className="text-red-400 mb-4">{error}</p>
+          <p className="text-[#ff6b6b] mb-4 text-sm animate-fade-up">
+            {error}
+          </p>
         )}
 
         {/* Results */}
         {prediction && (
-          <div className="bg-[#2b2b2b] rounded-lg border border-gray-700 p-6">
-            <div className="flex justify-between py-2 border-b border-gray-700">
-              <span className="text-gray-400">Age</span>
-              <span className="text-[#f59e0b]">{prediction.age ?? "Unknown"}</span>
-            </div>
-            <div className="flex justify-between py-2 border-b border-gray-700">
-              <span className="text-gray-400">Gender</span>
-              <span className="text-[#f59e0b]">{prediction.gender ?? "Unknown"}</span>
-            </div>
-            <div className="flex justify-between py-2">
-              <span className="text-gray-400">Country</span>
-              <span className="text-[#f59e0b]">{prediction.country ?? "Unknown"}</span>
-            </div>
+          <div className="space-y-3 animate-fade-up">
+            {[
+              { label: "Age", value: prediction.age ?? "Unknown" },
+              { label: "Gender", value: prediction.gender ?? "Unknown" },
+              { label: "Country", value: prediction.country ?? "Unknown" },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between items-center px-4 py-3 rounded-lg bg-[#0f1319] border border-[#1f2633] hover:border-[#f4a24f]/40 transition-colors"
+              >
+                <span className="text-[#9aa3b2] text-sm">{item.label}</span>
+                <span className="text-[#f4a24f] font-medium">
+                  {item.value}
+                </span>
+              </div>
+            ))}
           </div>
         )}
       </div>
